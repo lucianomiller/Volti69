@@ -1,4 +1,8 @@
--- Artista: Calcagno, Misael Dominique. Legajo: CyT-6322 					--
+--	Controladora de VGA(vga_ctrl):									--
+--	Módulo controlador de VGA, copia los valores RGB siempre que	--
+--	haya que imprimir en pantalla y saca los pulsos de sincronismo	--
+--	vertical y horizontal											--
+-- 	Artista: Calcagno, Misael Dominique. Legajo: CyT-6322 			--
 
 
 library IEEE;
