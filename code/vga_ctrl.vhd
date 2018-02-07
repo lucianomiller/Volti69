@@ -70,7 +70,6 @@ end component;
 --	constant vbp: unsigned(9 downto 0) := to_unsigned(31, 10);	 	-- Back porch vertical (31, "0000011111")
 --	constant vfp: unsigned(9 downto 0) := to_unsigned(511, 10);		-- Front porch vertical (511, "0111111111")
 	
-	signal hc, vc: unsigned(9 downto 0);
 	signal vidon: std_logic;
 	signal rsth, rstv: std_logic;
 	
@@ -78,8 +77,6 @@ end component;
 	
 	signal D_h, Q_h, C_h: std_logic_vector(10 downto 0);
 	signal Qh: std_logic_vector(9 downto 0);
-  
-	signal screen_h, screen_v: std_logic_vector(9 downto 0); 
    
 	signal D_v, Q_v, C_v: std_logic_vector( 9 downto 0);
 	signal enah, enav: std_logic;
@@ -260,10 +257,9 @@ begin
     grn_o <= vidon and grn_i;
     blu_o <= vidon and blu_i;
 	
-	Qh <= (Q_h(10)&Q_h(9)&Q_h(8)&Q_h(7)&Q_h(6)&Q_h(5)&Q_h(4)&Q_h(3)&Q_h(2)&Q_h(1));
-	hc <= unsigned (Qh);
-	vc <= unsigned (Q_v);
-	
+	num_h <= (Q_h(10)&Q_h(9)&Q_h(8)&Q_h(7)&Q_h(6)&Q_h(5)&Q_h(4)&Q_h(3)&Q_h(2)&Q_h(1));
+	num_v <= Q_v;
+
 --	screen_h <= std_logic_vector(hc - 144) ;
 	
 	sub_h <= "0010010000";
