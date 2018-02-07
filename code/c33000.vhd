@@ -1,22 +1,22 @@
--- Contador con aviso en 33301 y 33300 cuentas (c33300):	--
--- 33301 = 0x8215 = 0b 1000 0010 0001 0101 					--
--- 33300 = 0x8214 = 0b 1000 0010 0001 0100 					--
+-- Contador con aviso en 33001 y 33000 cuentas (c33300):	--
+-- 33001 = 0x80E9 = 0b 1000 0000 1110 1001 					--
+-- 33000 = 0x80E8 = 0b 1000 0000 1110 1000 					--
 -- Artista: Calcagno, Misael Dominique. Legajo: CyT-6322	--
 
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity c33300 is
+entity c33000 is
 	port(
 		clk: in std_logic;		-- Clock del sistema
 		rst: in std_logic;		-- Reset del sistema
 		ena: in std_logic;		-- Enable del sistema
-		Q_ENA: out std_logic;	-- Aviso a 33300	
- 		Q_RST: out std_logic	-- Aviso a 33301
+		Q_ENA: out std_logic;	-- Aviso a 33000	
+ 		Q_RST: out std_logic	-- Aviso a 33001
 	);
-end c33300;
+end c33000;
 
-architecture c33300_a of c33300 is
+architecture c33000_a of c33000 is
 	
 component ffd
 	port(
@@ -76,21 +76,21 @@ begin
 --	1		=	1					0					0					0	 
 	Q_x(3) <= Q_i(15) and (not (Q_i(14))) and (not (Q_i(13))) and (not (Q_i(12)));
 
---	1		=		  0					  0				1				  0
-	Q_x(2) <= (not (Q_i(11))) and (not (Q_i(10))) and Q_i( 9) and (not (Q_i( 8))); 
+--	1		=		  0					  0						0				  0
+	Q_x(2) <= (not (Q_i(11))) and (not (Q_i(10))) and (not (Q_i( 9))) and (not (Q_i( 8))); 
 
---	1		=		  0					  0					  0				1
-    Q_x(1) <= (not (Q_i( 7))) and (not (Q_i( 6))) and (not (Q_i( 5))) and Q_i( 4);
+--	1		=	1			  1			  1				0
+    Q_x(1) <= Q_i( 7) and Q_i( 6) and Q_i( 5) and (not (Q_i( 4)));
 
 --	1		=	1		   1		  1	
     Q_x(0) <= Q_x(3) and Q_x(2) and Q_x(1);
 
---	1		=	1				0			1				0			  1    
-    rst_end <= Q_x(0) and (not Q_i(3)) and Q_i(2) and (not (Q_i(1))) and Q_i(0);
+--	1		=	1			1				0					0		  1    
+    rst_end <= Q_x(0) and Q_i(3) and (not Q_i(2)) and (not (Q_i(1))) and Q_i(0);
 
     Q_RST <= rst_end;
 
---	1		= 1				  0				1				0				0
-    Q_ENA <= Q_x(0) and (not Q_i(3)) and Q_i(2) and (not (Q_i(1))) and (not Q_i(0));
+--	1		= 1			 1				0					0				0
+    Q_ENA <= Q_x(0) and Q_i(3) and (not Q_i(2)) and (not (Q_i(1))) and (not Q_i(0));
     
 end;
