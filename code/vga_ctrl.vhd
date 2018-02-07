@@ -48,6 +48,17 @@ component c_bu
 	);	
 end component;
 
+component c_subu
+	port(
+		ena: in std_logic;	-- Enable del módulo
+		num: in std_logic;    	-- Sustraendo
+		sub: in std_logic;  	-- Subtractor
+		Ci: in std_logic;	-- Carry de entrada
+		R: out std_logic;	-- Resultado
+		Co: out std_logic	-- Carry de salida
+	);
+end component;
+
 --	constant hpixels: unsigned(9 downto 0) := to_unsigned(800, 10);	-- Número de pixeles en una linea horizontal (800, "1100100000")
 --	constant vlines: unsigned(9 downto 0) := to_unsigned(521, 10);	-- Número de lineas horizontales en el display (521, "1000001001")
 	
@@ -59,16 +70,12 @@ end component;
 --	constant vbp: unsigned(9 downto 0) := to_unsigned(31, 10);	 	-- Back porch vertical (31, "0000011111")
 --	constant vfp: unsigned(9 downto 0) := to_unsigned(511, 10);		-- Front porch vertical (511, "0111111111")
 	
-	signal hc, vc: unsigned(9 downto 0);
 	signal vidon: std_logic;
 	signal rsth, rstv: std_logic;
 	
 	signal condh: std_logic;
 	
 	signal D_h, Q_h, C_h: std_logic_vector(10 downto 0);
-	signal Qh: std_logic_vector(9 downto 0);
-  
-	signal screen_h, screen_v: std_logic_vector(9 downto 0); 
    
 	signal D_v, Q_v, C_v: std_logic_vector( 9 downto 0);
 	signal enah, enav: std_logic;
@@ -77,7 +84,10 @@ end component;
  	signal enahfp, Qhfp, Dhfp, hfp: std_logic;    
  	signal enahbp, Qhbp, Dhbp, hbp: std_logic;   
  	signal enavfp, Qvfp, Dvfp, vfp: std_logic;    
- 	signal enavbp, Qvbp, Dvbp, vbp: std_logic; 
+ 	signal enavbp, Qvbp, Dvbp, vbp: std_logic;
+
+	signal num_h, sub_h, Ci_h, Co_h: std_logic_vector(9 downto 0);
+	signal num_v, sub_v, Ci_v, Co_v: std_logic_vector(9 downto 0);
  	
 begin
 
@@ -246,19 +256,49 @@ begin
     grn_o <= vidon and grn_i;
     blu_o <= vidon and blu_i;
 	
-	Qh <= (Q_h(10)&Q_h(9)&Q_h(8)&Q_h(7)&Q_h(6)&Q_h(5)&Q_h(4)&Q_h(3)&Q_h(2)&Q_h(1));
-	hc <= unsigned (Qh);
-	vc <= unsigned (Q_v);
+	num_h <= (Q_h(10)&Q_h(9)&Q_h(8)&Q_h(7)&Q_h(6)&Q_h(5)&Q_h(4)&Q_h(3)&Q_h(2)&Q_h(1));
+	num_v <= Q_v;
+
+--	screen_h <= std_logic_vector(hc - 144) ;
 	
-	screen_h <= std_logic_vector(hc - 144) ; 
-	screen_v <= std_logic_vector(vc -  31) ; 
-   
-   chufa1: for i in 0 to 9 generate
-      
-      pixel_x(i) <= screen_h(i) and vidon;
-      pixel_y(i) <= screen_v(i) and vidon;
-         
-   end generate chufa1;
-	
+	sub_h <= "0010010000";
+
+	Ci_h(0) <= '0';
+    
+	c_subu_h_block: for i in 0 to 9 generate
+		c_subu_h_i: c_subu
+			port map(
+				ena => vidon,
+				num => num_h(i),
+				sub => sub_h(i),
+				Ci => Ci_h(i),
+				R => pixel_x(i),
+				Co => Co_h(i)
+			);
+		chufah: if i>0 generate
+			Ci_h(i) <= Co_h(i-1);
+		end generate chufah;
+	end generate c_subu_h_block;
+
+--	screen_v <= std_logic_vector(vc -  31) ; 
+
+	sub_v <= "0000011111";
+
+	Ci_v(0) <= '0';
+    
+	c_subu_v_block: for i in 0 to 9 generate
+		c_subu_v_i: c_subu
+			port map(
+				ena => vidon,
+				num => num_v(i),
+				sub => sub_v(i),
+				Ci => Ci_v(i),
+				R => pixel_y(i),
+				Co => Co_v(i)
+			);
+		chufav: if i>0 generate
+			Ci_v(i) <= Co_v(i-1);
+		end generate chufav;
+	end generate c_subu_v_block;	
 		
 end vga_ctrl_arq;

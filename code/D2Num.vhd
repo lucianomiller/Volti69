@@ -32,7 +32,7 @@ component cont_BCD
 	);	
 end component;
 
-component c33300
+component c33000
     port(
 		clk: in std_logic;	-- Clock del sistema
 		rst: in std_logic;	-- Reset del sistema
@@ -64,9 +64,9 @@ constant ct_point: std_logic_vector(0 to 3):=('1','0','1','0');	-- Constante pun
 
 begin
     
-   c33300_1: c33300
+   c33000_1: c33000
       port map(
-      		clk => clk,
+      	  clk => clk,
 		  ena => ena,
 		  rst => rst,
 		  Q_ENA => Q_ENA,
