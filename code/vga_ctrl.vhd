@@ -76,7 +76,6 @@ end component;
 	signal condh: std_logic;
 	
 	signal D_h, Q_h, C_h: std_logic_vector(10 downto 0);
-	signal Qh: std_logic_vector(9 downto 0);
    
 	signal D_v, Q_v, C_v: std_logic_vector( 9 downto 0);
 	signal enah, enav: std_logic;
