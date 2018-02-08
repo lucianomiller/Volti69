@@ -120,7 +120,7 @@ begin
 	 end generate c_bu_blockh;
 	 
 	-- 801 = 0b 11 0010 0001 X
-	-- 800 = 0b 11 0010 0000 X
+	-- 800 = 0b 11 0010 0000 1
 	
 --	1	  =	 1			1				0					0			1				0				0				0		
    condh <= Q_h(10) and Q_h(9) and (not Q_h(8)) and (not Q_h(7)) and Q_h(6) and (not Q_h(5)) and (not Q_h(4)) and (not Q_h(3));   
