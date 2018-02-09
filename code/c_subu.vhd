@@ -1,4 +1,4 @@
--- Celda Substractora Unitaria (c_subu):	                     	--
+-- Celda Substractora Unitaria (c_subu):	                   	--
 -- Módulo para generar restadores binarios              		--
 -- Artista: Calcagno, Misael Dominique. Legajo: CyT-6322 		--
 

@@ -9,12 +9,12 @@ use IEEE.std_logic_1164.all;
 
 entity ADC is
 	port(
-		clk_ADC: in std_logic; 		-- Clock del sistema						--
-		rst_ADC: in std_logic;		-- Reset del sistema						--
-		ena_ADC: in std_logic;		-- Enable del sistema						--
-		vpositive: in std_logic;	-- Voltaje postivo de entrada al módulo		--
-		vnegative: out std_logic;	-- Voltaje negativo de salida del módulo	--
-		Q_ADC: out std_logic		-- Salida del módulo						--
+		clk_ADC: in std_logic; 		-- Clock del sistema						
+		rst_ADC: in std_logic;		-- Reset del sistema						
+		ena_ADC: in std_logic;		-- Enable del sistema						
+		vpositive: in std_logic;	-- Voltaje postivo de entrada al módulo		
+		vnegative: out std_logic;	-- Voltaje negativo de salida del módulo	
+		Q_ADC: out std_logic		-- Salida del módulo						
 	);
 
 end ADC;
@@ -31,8 +31,8 @@ component ffd
 	);	
 end component;
 
-signal Qo: std_logic; 				-- Cable para conectar la salida del		--
-									-- flipflop a las salidas					--
+signal Qo: std_logic; 				-- Cable para conectar la salida del	
+									-- flipflop a las salidas					
 
 begin
 	ffd_1: ffd
@@ -44,7 +44,7 @@ begin
 			Q => Qo
 		);
 	
-	vnegative <= not Qo;			-- Conecto la salida negativa				--
-	Q_ADC <= Qo;					-- Conecto la salida positiva del módulo	--
+	vnegative <= not Qo;			-- Conecto la salida negativa				
+	Q_ADC <= Qo;					-- Conecto la salida positiva del módulo
 
 end;
