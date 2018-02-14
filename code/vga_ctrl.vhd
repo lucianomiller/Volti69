@@ -4,7 +4,6 @@
 --	vertical y horizontal											--
 -- 	Artista: Calcagno, Misael Dominique. Legajo: CyT-6322 			--
 
-
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
@@ -58,17 +57,6 @@ component c_subu
 		Co: out std_logic	-- Carry de salida
 	);
 end component;
-
---	constant hpixels: unsigned(9 downto 0) := to_unsigned(800, 10);	-- Número de pixeles en una linea horizontal (800, "1100100000")
---	constant vlines: unsigned(9 downto 0) := to_unsigned(521, 10);	-- Número de lineas horizontales en el display (521, "1000001001")
-	
---	constant hpw: natural := 96; 									-- Ancho del pulso de sincronismo horizontal [pixeles]
---	constant hbp: unsigned(7 downto 0) := to_unsigned(144, 8);		-- Back porch horizontal (144, "0010010000")
---	constant hfp: unsigned(9 downto 0) := to_unsigned(784, 10);	 	-- Front porch horizontal (784, "1100010000")
-
---	constant vpw: natural := 2; 									-- Ancho del pulso de sincronismo vertical [líneas]
---	constant vbp: unsigned(9 downto 0) := to_unsigned(31, 10);	 	-- Back porch vertical (31, "0000011111")
---	constant vfp: unsigned(9 downto 0) := to_unsigned(511, 10);		-- Front porch vertical (511, "0111111111")
 	
 	signal vidon: std_logic;
 	signal rsth, rstv: std_logic;
