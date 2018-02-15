@@ -1,20 +1,19 @@
--- 	Analogic Digital Converter (ADC):											--
--- 	Módulo de entradas diferenciales para la conversión del mundo analógico al  --
---	digital																		--
--- 	usando un sigma-delta (flip-flop). 											--
--- 	Artista: Calcagno, Misael Dominique. Legajo: CyT-6322 						--
+-- 	Analogic Digital Converter (ADC):																							--
+-- 	Mï¿½dulo de entradas diferenciales para la conversiï¿½n del mundo analï¿½gico al 	--
+--	digital usando un sigma-delta (flip-flop). 																		--
+-- 	Artista: Calcagno, Misael Dominique. Legajo: CyT-6322 												--
 
 library IEEE;
 use IEEE.std_logic_1164.all;
 
 entity ADC is
 	port(
-		clk_ADC: in std_logic; 		-- Clock del sistema						
-		rst_ADC: in std_logic;		-- Reset del sistema						
-		ena_ADC: in std_logic;		-- Enable del sistema						
-		vpositive: in std_logic;	-- Voltaje postivo de entrada al módulo		
-		vnegative: out std_logic;	-- Voltaje negativo de salida del módulo	
-		Q_ADC: out std_logic		-- Salida del módulo						
+		clk_ADC: in std_logic; 		-- Clock del sistema
+		rst_ADC: in std_logic;		-- Reset del sistema
+		ena_ADC: in std_logic;		-- Enable del sistema
+		vpositive: in std_logic;	-- Voltaje postivo de entrada al mï¿½dulo
+		vnegative: out std_logic;	-- Voltaje negativo de salida del mï¿½dulo
+		Q_ADC: out std_logic		-- Salida del mï¿½dulo
 	);
 
 end ADC;
@@ -28,11 +27,11 @@ component ffd
 		ena: in std_logic;
 		D: in std_logic;
 		Q: out std_logic
-	);	
+	);
 end component;
 
-signal Qo: std_logic; 				-- Cable para conectar la salida del	
-									-- flipflop a las salidas					
+signal Qo: std_logic; 				-- Cable para conectar la salida del
+									-- flipflop a las salidas
 
 begin
 	ffd_1: ffd
@@ -43,8 +42,8 @@ begin
 			D => vpositive,
 			Q => Qo
 		);
-	
-	vnegative <= not Qo;			-- Conecto la salida negativa				
-	Q_ADC <= Qo;					-- Conecto la salida positiva del módulo
+
+	vnegative <= not Qo;			-- Conecto la salida negativa
+	Q_ADC <= Qo;					-- Conecto la salida positiva del mï¿½dulo
 
 end;
