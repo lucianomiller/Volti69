@@ -1,7 +1,7 @@
--- 	Analogic Digital Converter (ADC):																							--
+﻿-- 	Analogic Digital Converter (ADC):																							--
 -- 	M�dulo de entradas diferenciales para la conversi�n del mundo anal�gico al 	--
 --	digital usando un sigma-delta (flip-flop). 																		--
--- 	Artista: Calcagno, Misael Dominique. Legajo: CyT-6322 												--
+-- 	 			Luciano Miller									--
 
 library IEEE;
 use IEEE.std_logic_1164.all;
