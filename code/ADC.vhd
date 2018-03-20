@@ -1,4 +1,4 @@
-﻿-- 	Analogic Digital Converter (ADC):																							--
+-- 	Analogic Digital Converter (ADC):																							--
 -- 	M�dulo de entradas diferenciales para la conversi�n del mundo anal�gico al 	--
 --	digital usando un sigma-delta (flip-flop). 																		--
 -- 	 			Luciano Miller									--
