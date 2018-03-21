@@ -58,7 +58,7 @@ end component;
 --	);
 --end component;
 	
-	signal vidon: std_logic;
+	signal vidon , vidon2: std_logic;
 	signal rsth, rstv: std_logic;
 	signal rsth2, rstv2: std_logic;
 	signal condh: std_logic;
@@ -297,13 +297,13 @@ begin
 	
 	--		Contador Horizontal 2: inicio		--
 
-   enah2 <= vidon;
+  -- enah2 <= vidon;
    
    ffdh2: ffd
        port map(
           clk => clk,	     -- Clock del módulo
-          rst => rsth2,	  	 -- Reset del módulo
-          ena => enah2,    	 -- Enable del sistema
+          rst => rsth,	  	 -- Reset del módulo
+          ena => vidon,    	 -- Enable del sistema
           D => D2_h(0),	  
           Q => Q2_h(0)
 	  );
@@ -314,8 +314,8 @@ begin
 	   c_buih2: c_bu
 	      port map(
 	          clk => clk,
-	          rst => rsth2,
-	          ena => enah2,
+	          rst => rsth,
+	          ena => vidon,
 	          D => D2_h(i),
 	          Q => Q2_h(i),
 	          C => C2_h(i)
@@ -323,7 +323,7 @@ begin
 	   D2_h(i) <= C2_h(i-1);
 	 end generate c_bu_blockh2;
 	 
-	 pixel_x	 <= (Q2_h(10)&Q2_h(9)&Q2_h(8)&Q2_h(7)&Q2_h(6)&Q2_h(5)&Q2_h(4)&Q2_h(3)&Q2_h(2)&Q2_h(1));
+	 pixel_x	 <= (Q2_h(10) & Q2_h(9)&Q2_h(8)&Q2_h(7)&Q2_h(6)&Q2_h(5)&Q2_h(4)&Q2_h(3)&Q2_h(2)&Q2_h(1));
 	-- 641 = 0b 10 1000 0001 X
 	-- 640 = 0b 10 1000 0000 1
 	
@@ -331,20 +331,20 @@ begin
    condh2 <= Q2_h(10) and (not Q2_h(9)) and  Q2_h(8) and (not Q2_h(7)) and (not Q2_h(6)) and (not Q2_h(5)) and (not Q2_h(4)) and (not Q2_h(3));   
 
 --  1	=	1				0			1 
-   rsth2 <= condh2 and (not Q2_h(2)) and Q2_h(1);
+   rsth2 <= condh2 and (not Q2_h(1)) and Q2_h(0);
 
 --		Contador Horizontal: fin		--
    
 --		Contador Vertical: incio		--
-   
+   vidon2 <= vidon and enav2;
 --	1	 =	1				0				0			1
-   enav2 <= condh2 and (not Q2_h(2)) and (not Q2_h(1)) and Q2_h(0);
+   enav2 <= Q2_h(10) and (not Q2_h(9)) and (not  Q2_h(8)) and Q2_h(7) and Q2_h(6) and Q2_h(5) and Q2_h(4) and Q2_h(3) and Q2_h(2) and (not Q2_h(1)) and Q2_h(0);
    
    ffdv2: ffd
        port map(
           clk => clk,	     -- Clock del módulo
-          rst => rstv2,	  	 -- Reset del módulo
-          ena => enav2,    	 -- Enable del sistema
+          rst => rstv,	  	 -- Reset del módulo
+          ena => vidon2,    	 -- Enable del sistema
           D => D2_v(0),	  
           Q => Q2_v(0)
 	  );
@@ -355,8 +355,8 @@ begin
 	   c_buiv2: c_bu
 	      port map(
 	          clk => clk,
-	          rst => rstv2,
-	          ena => enav2,
+	          rst => rstv,
+	          ena => vidon2,
 	          D => D2_v(i),
 	          Q => Q2_v(i),
 	          C => C2_v(i)
@@ -364,10 +364,10 @@ begin
 	   D2_v(i) <= C2_v(i-1);
 	 end generate c_bu_blockv2;
 	 pixel_y <= Q2_v;
-   -- 480 = 0b 01 1110 0000
+   -- 481 = 0b 01 1110 0001
 
 --	1	=	0				1				1				 1					1				0			0				0			0				0				
-   rstv2 <=  not Q2_v(9) and  Q2_v(8) and  Q2_v(7) and  Q2_v(6) and (not Q2_v(5)) and (not Q2_v(4)) and (not Q2_v(3)) and (not Q2_v(2)) and Q2_v(1) and (not Q2_v(0));
+   rstv2 <=  not Q2_v(9) and  Q2_v(8) and  Q2_v(7) and  Q2_v(6) and  Q2_v(5) and (not Q2_v(4)) and (not Q2_v(3)) and (not Q2_v(2)) and (not Q2_v(1)) and  Q2_v(0);
 
 --		Contador Vertical: fin		--  
 	
